@@ -8,6 +8,19 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v1
+      - name: Set Heroku credentials
+        env: 
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: |
+          cat >~/.netrc <<EOF
+          machine git.heroku.com
+            login ssullivan61198@gmail.com
+            password $HEROKU_API_KEY
+          EOF
       - name: Push to Heroku
-        run: git push -f https://heroku:${{ secrets.HEROKU_API_TOKEN }}@git.heroku.com/gwwc-data-table-react.git origin/main:main
+        env: 
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: |
+          heroku git:remote -a gwwc-data-table-react
+          git push heroku main
