@@ -24,4 +24,4 @@ jobs:
         run: |
           heroku git:remote -a gwwc-data-table-react
           git show-ref
-          git push heroku HEAD:main
+          git push heroku refs/remotes/origin/main:refs/heads/main
