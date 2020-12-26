@@ -1,7 +1,8 @@
 import React from "react"
 
-export default class DataTable extends React.Component {
-    render() {
-        return <p>hello</p>
-    }
+function DataTable(props){
+    console.log(props.organizations)
+    return <p>hello</p>
 }
+
+export default DataTable;
