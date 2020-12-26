@@ -6,26 +6,25 @@ import firebase from 'firebase/app';
 import 'firebase/database';
 
 firebase.initializeApp({
-    apiKey: "AIzaSyBe9RfBFcXjrGtQ7jVxtrxSOWhqf28DHYk",
-    authDomain: "gwwc-data-table.firebaseapp.com",
-    databaseURL: "https://gwwc-data-table.firebaseio.com",
-    projectId: "gwwc-data-table",
-    storageBucket: "gwwc-data-table.appspot.com",
-    messagingSenderId: "924988001345",
-    appId: "1:924988001345:web:655254cb48b7162b6f4ac0",
-    measurementId: "G-TC4E5JES7F"
+  apiKey: "AIzaSyBe9RfBFcXjrGtQ7jVxtrxSOWhqf28DHYk",
+  authDomain: "gwwc-data-table.firebaseapp.com",
+  databaseURL: "https://gwwc-data-table.firebaseio.com",
+  projectId: "gwwc-data-table",
+  storageBucket: "gwwc-data-table.appspot.com",
+  messagingSenderId: "924988001345",
+  appId: "1:924988001345:web:655254cb48b7162b6f4ac0",
+  measurementId: "G-TC4E5JES7F"
 })
 
 const database = firebase.database();
 
 function App() {
-
   const [organizations, setOrganizations] = useState([]);
 
   useEffect(() => {
-      database.ref('/organisations/').once('value').then((snapshot) => {
-              setOrganizations(snapshot.val());
-      });
+    database.ref('/organisations/').once('value').then((snapshot) => {
+      setOrganizations(snapshot.val());
+    });
   }, [])
 
   return (
