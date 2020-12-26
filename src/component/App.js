@@ -1,10 +1,9 @@
 import './App.css';
+import DataTable from './DataTable'
+import { useState, useEffect } from 'react';
 
 import firebase from 'firebase/app';
-import 'firebase/firestore';
-import 'firebase/auth';
-
-import { useCollectionData } from 'react-firebase-hooks/firestore';
+import 'firebase/database';
 
 firebase.initializeApp({
     apiKey: "AIzaSyBe9RfBFcXjrGtQ7jVxtrxSOWhqf28DHYk",
@@ -17,30 +16,23 @@ firebase.initializeApp({
     measurementId: "G-TC4E5JES7F"
 })
 
-const firestore = firebase.firestore();
+const database = firebase.database();
 
 function App() {
 
+  const [organisations, setOrganisations] = useState([]);
+
+  useEffect(() => {
+      database.ref('/organisations/').once('value').then((snapshot) => {
+              setOrganisations(snapshot.val());
+      });
+  }, [])
+
   return (
     <div className="App">
-      <p>here's the data table:</p>
-      <DataTable></DataTable>
+      <DataTable organizations={organisations}></DataTable>
     </div>
   );
 }
-
-function DataTable() {
-    const organisationsRef = firestore.collection('organisations')
-    const query = organisationsRef.orderBy('Full Name').limit(25)
-    const organisations = useCollectionData(query, { idField: 'id' })
-
-    return (
-      <div className="DataTable">
-      <p>here are all the variables:</p>
-      <p>{organisations.map(organisation => <div>{organisation}</div>)}</p>
-      </div>
-    )
-}
-
 
 export default App;
