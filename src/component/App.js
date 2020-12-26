@@ -20,17 +20,17 @@ const database = firebase.database();
 
 function App() {
 
-  const [organisations, setOrganisations] = useState([]);
+  const [organizations, setOrganizations] = useState([]);
 
   useEffect(() => {
       database.ref('/organisations/').once('value').then((snapshot) => {
-              setOrganisations(snapshot.val());
+              setOrganizations(snapshot.val());
       });
   }, [])
 
   return (
     <div className="App">
-      <DataTable organizations={organisations}></DataTable>
+      <DataTable organizations={organizations}></DataTable>
     </div>
   );
 }
