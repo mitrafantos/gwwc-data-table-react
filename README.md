@@ -1,6 +1,6 @@
 # New
 
-Compared to original repo, this fork is implemented with DataGrid
+Compared to the original project, which is created with MaterialUI Table component, this fork is implemented with MaterialUI DataGrid, allowing for more advanced features.
 
 
 # Getting Started with Create React App
