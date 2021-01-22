@@ -8,16 +8,21 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - name: Login to Heroku Container registry
-      env: 
-        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-      run: heroku container:login 
-    - name: Build and push
-      env:
-        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-      run: heroku container:push -a appname web 
-    - name: Release
-      env:
-        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-      run: heroku container:release -a appname web 
+      - uses: actions/checkout@v1
+      - name: Set Heroku credentials
+        env: 
+          HEROKU_LOGIN: ${{secrets.HEROKU_LOGIN}}
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: |
+          cat >~/.netrc <<EOF
+          machine git.heroku.com
+            login $HEROKU_LOGIN
+            password $HEROKU_API_KEY
+          EOF
+      - name: Push to Heroku
+        env: 
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: |
+          heroku git:remote -a gwwc-data-table-datagrid
+          git show-ref
+          git push heroku refs/remotes/origin/main:refs/heads/main
