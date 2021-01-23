@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
-import { useTable } from 'react-table';
+// import { useTable } from 'react-table';
+import PropTypes from 'prop-types';
 import MUITable from './MUITable';
 
 function getColumns() {
@@ -24,6 +25,7 @@ function getColumns() {
       accessor: 'slug',
       id: 'donate',
       Header: 'Donate',
+      // eslint-disable-next-line react/prop-types
       Cell: ({ value }) => {
         // TODO: update url
         const url = `https://app.effectivealtruism.org/donations/new/allocation?allocation[${value}]=100`;
@@ -35,6 +37,7 @@ function getColumns() {
       accessor: 'slug',
       id: 'learnMore',
       Header: 'Learn More',
+      // eslint-disable-next-line react/prop-types
       Cell: ({ value }) => {
         // TODO: update url
         const url = `https://app.effectivealtruism.org/funds/${value}`;
@@ -47,8 +50,8 @@ function getColumns() {
 
 function filterEmpty(str) {
   // TODO handle null value filtering upstream in excel sheet import to firebase
-  if (str == '&null') return '';
-  if (str == '#N/A') return '';
+  if (str === '&null') return '';
+  if (str === '#N/A') return '';
   return str;
 }
 
@@ -60,7 +63,7 @@ function createRows(organizations) {
     cause: filterEmpty(item['Core Cause']),
     totalDonations: filterEmpty(item['Total Donations']),
     gwwcDonations: filterEmpty(item['GWWC &dollar donated']),
-  })).filter(x => !!x['charity']);
+  })).filter((x) => !!x.charity);
 }
 
 function DataTable(props) {
@@ -70,7 +73,12 @@ function DataTable(props) {
 
   return (
     <MUITable data={data} columns={columns} />
-  )
+  );
 }
+
+DataTable.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
+  organizations: PropTypes.object.isRequired,
+};
 
 export default DataTable;

@@ -7,9 +7,9 @@ firebase.initializeApp(firebaseConfig);
 const database = firebase.database();
 
 function getData(setData) {
-    database.ref('/organisations/').once('value').then((snapshot) => {
-        setData(snapshot.val());
-      });
+  database.ref('/organisations/').once('value').then((snapshot) => {
+    setData(snapshot.val());
+  });
 }
 
 export default getData;

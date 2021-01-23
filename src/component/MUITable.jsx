@@ -1,10 +1,11 @@
-import React from 'react'
+/* eslint-disable react/jsx-props-no-spreading */
+import React from 'react';
 import PropTypes from 'prop-types';
 
-import { fade, makeStyles } from '@material-ui/core/styles'
-import Checkbox from '@material-ui/core/Checkbox';
-import InputBase from '@material-ui/core/InputBase'
-import SearchIcon from '@material-ui/icons/Search'
+import { fade, makeStyles } from '@material-ui/core/styles';
+// import Checkbox from '@material-ui/core/Checkbox';
+import InputBase from '@material-ui/core/InputBase';
+import SearchIcon from '@material-ui/icons/Search';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -14,14 +15,16 @@ import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
-import Toolbar from '@material-ui/core/Toolbar'
-import Typography from '@material-ui/core/Typography'
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
 
-import { useGlobalFilter, usePagination, useSortBy, useTable, useFlexLayout } from 'react-table';
+import {
+  useGlobalFilter, usePagination, useSortBy, useTable, useFlexLayout,
+} from 'react-table';
 
 import Pagination from './Pagination';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(1),
@@ -64,7 +67,7 @@ const useStyles = makeStyles(theme => ({
       width: 200,
     },
   },
-}))
+}));
 
 const MUITable = ({ columns, data }) => {
   const {
@@ -90,14 +93,13 @@ const MUITable = ({ columns, data }) => {
 
   const handleChangePage = (event, newPage) => {
     gotoPage(newPage);
-  }
+  };
 
-  const handleChangeRowsPerPage = event => {
+  const handleChangeRowsPerPage = (event) => {
     setPageSize(Number(event.target.value));
-  }
+  };
 
-  const removeByIndexs = (array, indexs) =>
-    array.filter((_, i) => !indexs.includes(i));
+  // const removeByIndexs = (array, indexs) => array.filter((_, i) => !indexs.includes(i));
 
   // Render the UI for your table
   return (
@@ -112,8 +114,9 @@ const MUITable = ({ columns, data }) => {
           </div>
           <InputBase
             value={globalFilter || ''}
-            onChange={e => {
-              setGlobalFilter(e.target.value || undefined) // Set undefined to remove the filter entirely
+            onChange={(e) => {
+              setGlobalFilter(e.target.value || undefined);
+              // Set undefined to remove the filter entirely
             }}
             placeholder={`${preGlobalFilteredRows.length} records...`}
             classes={{
@@ -125,9 +128,9 @@ const MUITable = ({ columns, data }) => {
       </Toolbar>
       <Table {...getTableProps()}>
         <TableHead>
-          {headerGroups.map(headerGroup => (
+          {headerGroups.map((headerGroup) => (
             <TableRow {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map(column => (
+              {headerGroup.headers.map((column) => (
                 <TableCell
                   {...(column.id === 'selection'
                     ? column.getHeaderProps()
@@ -147,19 +150,17 @@ const MUITable = ({ columns, data }) => {
           ))}
         </TableHead>
         <TableBody>
-          {page.map((row, i) => {
-            prepareRow(row)
+          {page.map((row) => {
+            prepareRow(row);
             return (
               <TableRow {...row.getRowProps()}>
-                {row.cells.map(cell => {
-                  return (
-                    <TableCell {...cell.getCellProps()}>
-                      {cell.render('Cell')}
-                    </TableCell>
-                  )
-                })}
+                {row.cells.map((cell) => (
+                  <TableCell {...cell.getCellProps()}>
+                    {cell.render('Cell')}
+                  </TableCell>
+                ))}
               </TableRow>
-            )
+            );
           })}
         </TableBody>
 
@@ -186,12 +187,12 @@ const MUITable = ({ columns, data }) => {
         </TableFooter>
       </Table>
     </TableContainer>
-  )
-}
+  );
+};
 
 MUITable.propTypes = {
-  columns: PropTypes.array.isRequired,
-  data: PropTypes.array.isRequired,
-}
+  columns: PropTypes.arrayOf(PropTypes.object).isRequired,
+  data: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
 
 export default MUITable;
