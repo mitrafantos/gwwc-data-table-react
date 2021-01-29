@@ -4,7 +4,7 @@ import DataTable from './DataTable';
 
 import getData from '../utilities/firebase';
 
-function App() {
+export default function App() {
   const [organizations, setOrganizations] = useState([]);
 
   useEffect(() => {
@@ -17,5 +17,3 @@ function App() {
     </div>
   );
 }
-
-export default App;
