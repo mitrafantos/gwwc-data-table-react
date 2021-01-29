@@ -1,84 +1,43 @@
-import React, { useMemo } from 'react';
-// import { useTable } from 'react-table';
+/* eslint-disable no-param-reassign */
+import {
+  React,
+  useMemo,
+} from 'react';
 import PropTypes from 'prop-types';
-import MUITable from './MUITable';
+import { DataGrid } from '@material-ui/data-grid';
 
-function getColumns() {
-  return [
-    {
-      accessor: 'charity',
-      Header: 'Charity',
-    },
-    {
-      accessor: 'cause',
-      Header: 'Cause Area',
-    },
-    {
-      accessor: 'totalDonations',
-      Header: 'Total Donations',
-    },
-    {
-      accessor: 'gwwcDonations',
-      Header: 'GWWC Donations',
-    },
-    {
-      accessor: 'slug',
-      id: 'donate',
-      Header: 'Donate',
-      // eslint-disable-next-line react/prop-types
-      Cell: ({ value }) => {
-        // TODO: update url
-        const url = `https://app.effectivealtruism.org/donations/new/allocation?allocation[${value}]=100`;
-        return <a href={url}>Donate</a>;
-      },
-      disableSortBy: true,
-    },
-    {
-      accessor: 'slug',
-      id: 'learnMore',
-      Header: 'Learn More',
-      // eslint-disable-next-line react/prop-types
-      Cell: ({ value }) => {
-        // TODO: update url
-        const url = `https://app.effectivealtruism.org/funds/${value}`;
-        return <a href={url}>Learn More</a>;
-      },
-      disableSortBy: true,
-    },
-  ];
+function getColumns(headers) {
+  return headers.filter((el) => el !== null);
 }
 
-function filterEmpty(str) {
-  // TODO handle null value filtering upstream in excel sheet import to firebase
-  if (str === '&null') return '';
-  if (str === '#N/A') return '';
-  return str;
+function getRows(organisations) {
+  const result = [];
+  Object.entries(organisations)
+    .filter(([key]) => key !== 'headers')
+    .forEach(([key, row]) => {
+      row.id = key;
+      result.push(row);
+    });
+  return result;
 }
 
-function createRows(organizations) {
-  const data = Object.entries(organizations);
-  return data.map(([slug, item]) => ({
-    slug,
-    charity: filterEmpty(item['Full Name']),
-    cause: filterEmpty(item['Core Cause']),
-    totalDonations: filterEmpty(item['Total Donations']),
-    gwwcDonations: filterEmpty(item['GWWC &dollar donated']),
-  })).filter((x) => !!x.charity);
-}
-
-function DataTable(props) {
-  const { organizations } = props;
-  const data = useMemo(() => createRows(organizations), [organizations]);
-  const columns = useMemo(getColumns, []);
+export default function DataTable(props) {
+  const { organisations } = props;
+  console.log(organisations);
+  const { headers } = organisations;
+  const columns = useMemo(() => getColumns(headers), [headers]);
+  const rows = useMemo(() => getRows(organisations), [organisations]);
 
   return (
-    <MUITable data={data} columns={columns} />
+    <DataGrid
+      columns={columns}
+      rows={rows}
+      showToolbar
+    />
   );
 }
 
 DataTable.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
-  organizations: PropTypes.object.isRequired,
+  organisations: PropTypes.object.isRequired,
 };
-
-export default DataTable;
