@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 import {
   React,
   useMemo,
@@ -7,11 +6,13 @@ import PropTypes from 'prop-types';
 import { DataGrid } from '@material-ui/data-grid';
 
 function getColumns(headers) {
-  return headers.filter((el) => el !== null);
+  return headers
+    .filter((el) => el !== null)
+    .map((header) => ({ flex: true, width: 200, ...header }));
 }
 
 function getRows(organisations) {
-  Object.entries(organisations)
+  return Object.entries(organisations)
     .filter(([slug]) => slug !== 'headers')
     .map(([slug, row]) => ({ id: slug, ...row }));
 }
@@ -27,6 +28,7 @@ export default function DataTable(props) {
       columns={columns}
       rows={rows}
       showToolbar
+      disableDensitySelector
     />
   );
 }

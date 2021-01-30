@@ -1,7 +1,7 @@
 {
-  "name": "gwwc-data-table",
-  "version": "0.1.0",
-  "private": true,
+  "name": "gwwc-data-table-datagrid",
+  "version": "0.0.9",
+  "private": false,
   "dependencies": {
     "@material-ui/core": "^4.11.2",
     "@material-ui/data-grid": "^4.0.0-alpha.17",

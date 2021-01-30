@@ -8,8 +8,6 @@ const firebaseConfig = JSON.parse(process.env.REACT_APP_FIREBASE_CONFIG);
 firebase.initializeApp(firebaseConfig);
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <App />,
   document.getElementById('root'),
 );

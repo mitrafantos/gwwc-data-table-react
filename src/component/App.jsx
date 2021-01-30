@@ -13,8 +13,12 @@ export default function App() {
   }, []);
 
   return (
-    <div className="App">
-      <DataTable organisations={organisations} />
+    <div style={{ height: 670, width: '100%' }}>
+      <div style={{ display: 'flex', height: '100%' }} className="App">
+        <div style={{ flexGrow: 1 }}>
+          <DataTable organisations={organisations} />
+        </div>
+      </div>
     </div>
   );
 }
