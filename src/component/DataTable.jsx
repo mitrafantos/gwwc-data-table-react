@@ -11,19 +11,13 @@ function getColumns(headers) {
 }
 
 function getRows(organisations) {
-  const result = [];
   Object.entries(organisations)
-    .filter(([key]) => key !== 'headers')
-    .forEach(([key, row]) => {
-      row.id = key;
-      result.push(row);
-    });
-  return result;
+    .filter(([slug]) => slug !== 'headers')
+    .map(([slug, row]) => ({ id: slug, ...row }));
 }
 
 export default function DataTable(props) {
   const { organisations } = props;
-  console.log(organisations);
   const { headers } = organisations;
   const columns = useMemo(() => getColumns(headers), [headers]);
   const rows = useMemo(() => getRows(organisations), [organisations]);
