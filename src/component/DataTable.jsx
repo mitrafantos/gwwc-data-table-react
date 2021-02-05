@@ -27,6 +27,7 @@ export default function DataTable(props) {
       rows={rows}
       showToolbar
       disableDensitySelector
+      disableColumnMenu
     />
   );
 }
