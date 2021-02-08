@@ -9,10 +9,8 @@ function getColumns(headers) {
   return headers;
 }
 
-function getRows(organisations) {
-  return Object.entries(organisations)
-    .filter(([slug]) => slug !== 'headers' && slug !== 'filters' && slug !== 'sort')
-    .map(([, row]) => row);
+function getRows(rows) {
+  return rows;
 }
 
 function getFilterModel(filterModel) {
@@ -25,13 +23,10 @@ function getSortModel(sortModel) {
 
 export default function DataTable(props) {
   const { organisations } = props;
-  const { headers } = organisations;
-  const { filters } = organisations;
-  const { sort } = organisations;
-  const columns = useMemo(() => getColumns(headers), [headers]);
-  const rows = useMemo(() => getRows(organisations), [organisations]);
-  const filterModel = useMemo(() => getFilterModel(filters), [filters]);
-  const sortModel = useMemo(() => getSortModel(sort), [sort]);
+  const columns = useMemo(() => getColumns(organisations.headers), [organisations.headers]);
+  const rows = useMemo(() => getRows(organisations.rows), [organisations.rows]);
+  const filterModel = useMemo(() => getFilterModel(organisations.filters), [organisations.filters]);
+  const sortModel = useMemo(() => getSortModel(organisations.sort), [organisations.sort]);
 
   return (
     <DataGrid
