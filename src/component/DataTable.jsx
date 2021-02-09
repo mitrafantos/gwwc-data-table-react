@@ -4,9 +4,39 @@ import {
 } from 'react';
 import PropTypes from 'prop-types';
 import { DataGrid } from '@material-ui/data-grid';
+import Button from '@material-ui/core/Button';
+
+function TableButton(data, buttonText) {
+  if (data.value) {
+    return (
+      <strong>
+        <Button
+          variant="contained"
+          color="primary"
+          size="small"
+          href={data.value}
+        >
+          {buttonText}
+        </Button>
+      </strong>
+    );
+  }
+  return data.value;
+}
+
+function addButton(header) {
+  if (header.button) {
+    return {
+      ...header,
+      renderCell: (params) => (TableButton(params, header.button)),
+    };
+  }
+
+  return header;
+}
 
 function getColumns(headers) {
-  return headers;
+  return headers.map(addButton);
 }
 
 function getRows(rows) {
