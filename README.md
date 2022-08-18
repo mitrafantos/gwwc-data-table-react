@@ -1,6 +1,8 @@
-# New
+# What's new
 
 Compared to the original project, which is created with MaterialUI Table component, this fork is implemented with MaterialUI DataGrid, allowing for more advanced features.
+
+The back-end is Firebase, synchronized with Google Sheets via a [custom script](https://gist.github.com/mitroitskii/df6406eba93eb919a7991f01ccb0cda9)
 
 
 # Getting Started with Create React App
